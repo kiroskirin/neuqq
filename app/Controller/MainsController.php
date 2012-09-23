@@ -2,10 +2,14 @@
 
 	class MainsController extends AppController{
 		var $uses = array("");
-		var $layout = false;
+		//var $layout = false;
 
 		function index(){
 
+		}
+
+		function view(){
+			
 		}
 
 	}

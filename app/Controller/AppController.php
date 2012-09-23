@@ -1,4 +1,5 @@
 <?php
+//session_start();
 /**
  * Application level Controller
  *
@@ -33,20 +34,24 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-	    //...
-
     public $components = array(
-        'Session',
+        'Acl',
         'Auth' => array(
-            'loginRedirect' => array('controller' => 'posts', 'action' => 'index'),
-            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
-        )
+            'authorize' => array(
+                'Actions' => array('actionPath' => 'controllers')
+            )
+        ),
+        'Session'
     );
+    public $helpers = array('Html', 'Form', 'Session');
 
     public function beforeFilter() {
-        $this->Auth->allow('index', 'view');
+        //Configure AuthComponent
+        $this->Auth->allow('*');
+        $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
+		$this->Auth->logoutRedirect = array('controller' => 'users', 'action' => 'login');
+		$this->Auth->loginRedirect = array('controller' => 'posts', 'action' => 'add');
     }
-    //...
 
 
 }
